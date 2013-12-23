@@ -1,7 +1,9 @@
 <?php
 
-if ( !class_exists( 'Less_Parser' ) ) :
-	require_once 'less.php/Less.php';
+if ( !class_exists( 'scssc' ) ) :
+	require_once 'inludes/scss.php';
 endif;
 
-include_once( dirname(__FILE__).'/bootstrap-compiler.php' );
+include_once 'inludes/functions.core.php';
+include_once 'inludes/functions.variables.php';
+include_once 'inludes/functions.compiler.php';
