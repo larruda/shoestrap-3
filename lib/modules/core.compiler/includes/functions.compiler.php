@@ -1,32 +1,20 @@
 <?php
 
-if ( !function_exists( 'shoestrap_phpless_compiler' ) ) :
+
+if ( !function_exists( 'shoestrap_phpsass_compiler' ) ) :
 /*
- * This function can be used to compile a less file to css using the lessphp compiler
+ * This function can be used to compile an scss file to css using the scssphp compiler
  */
-function shoestrap_phpless_compiler() {
+function shoestrap_phpsass_compiler() {
 
-  if ( !class_exists( 'Less_Parser' ) ) :
-    require_once 'less.php/Less.php';
-  endif;
+  $formatter = ( shoestrap_getVariable( 'minimize_css', true ) == 1 ) ?
+    'scss_formatter_compressed' :
+    'scss_formatter_nested';
 
-  if ( shoestrap_getVariable( 'minimize_css', true ) == 1 ) :
-    $options = array( 'compress'=>true );
-  else :
-    $options = array( 'compress'=>false );
-  endif;
+  $scss = new scssc();
+  $scss->setFormatter( $formatter );
 
-  $parser = new Less_Parser( $options );
-
-  $parser->parse( shoestrap_complete_less() );
-  $css = $parser->getCss();
-  // This is a REALLY ugly hack...
-  $css = str_replace( get_template_directory() . '/assets/less/fonts/', '', $css );
-  $css = str_replace( get_template_directory_uri() . '/assets/', '../', $css );
-  // Add FUGLY hack for child themes
-  if ( is_child_theme() ) :
-    $css = str_replace( get_stylesheet_directory(), get_stylesheet_directory_uri(), $css );
-  endif;
+  $css = $scss->compile( shoestrap_complete() );
 
   return apply_filters( 'shoestrap_compiler_output', $css );
 }
@@ -34,7 +22,7 @@ endif;
 
 
 if ( !function_exists( 'shoestrap_compile_css' ) ) :
-function shoestrap_compile_css( $method = 'php' ) {
+function shoestrap_compile_css() {
   global $wp_filesystem;
   
   // Initialize the Wordpress filesystem, no more using file_put_contents function
@@ -46,15 +34,12 @@ function shoestrap_compile_css( $method = 'php' ) {
 
 ';
   
-  if ( $method == 'php' ) :
-    if ( get_option( 'shoestrap_activated' ) == 1 ) :
-      $content .= shoestrap_phpless_compiler();
-      $file = shoestrap_css();
-      if ( is_writeable( $file ) || ( !file_exists( $file ) && is_writeable( dirname( $file ) ) ) ) :
-        if ( !$wp_filesystem->put_contents( $file, $content, FS_CHMOD_FILE ) ) :
-          return $content;
-        endif;
-      endif;
+  $content .= shoestrap_phpsass_compiler();
+  $file = shoestrap_css();
+
+  if ( is_writeable( $file ) || ( !file_exists( $file ) && is_writeable( dirname( $file ) ) ) ) :
+    if ( !$wp_filesystem->put_contents( $file, $content, FS_CHMOD_FILE ) ) :
+      return $content;
     endif;
   endif;
 }
@@ -71,12 +56,12 @@ function shoestrap_makecss() {
 endif;
 
 
-if ( is_writable( get_template_directory() . '/assets/less/custom.less' ) ) :
-  // If the Custom LESS file has changed, trigger the compiler.
-  if ( filemtime( get_template_directory() . '/assets/less/custom.less' ) != get_option( 'shoestrap_custom_lessfile_datetime' ) ) :
+if ( is_writable( get_template_directory() . '/assets/sass/custom.scss' ) ) :
+  // If the Custom SCSS file has changed, trigger the compiler.
+  if ( filemtime( get_template_directory() . '/assets/sass/custom.scss' ) != get_option( 'shoestrap_custom_scssfile_datetime' ) ) :
     shoestrap_makecss();
   endif;
 
-  // Update the 'shoestrap_custom_lessfile_datetime' option with the new filem data of the custom.less file
-  update_option( 'shoestrap_custom_lessfile_datetime', filemtime( get_template_directory() . '/assets/less/custom.less' ) );
+  // Update the 'shoestrap_custom_scssfile_datetime' option with the new filem data of the custom.scss file
+  update_option( 'shoestrap_custom_scssfile_datetime', filemtime( get_template_directory() . '/assets/scss/custom.scss' ) );
 endif;
