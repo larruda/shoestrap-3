@@ -1,9 +1,9 @@
 <?php
 
 if ( !class_exists( 'scssc' ) ) :
-	require_once 'inludes/scss.php';
+	require_once ( dirname( __FILE__ ) . '/includes/scss.inc.php' );
 endif;
 
-include_once 'inludes/functions.core.php';
-include_once 'inludes/functions.variables.php';
-include_once 'inludes/functions.compiler.php';
+include_once ( dirname( __FILE__ ) . '/includes/functions.core.php' );
+include_once ( dirname( __FILE__ ) . '/includes/functions.variables.php' );
+include_once ( dirname( __FILE__ ) . '/includes/functions.compiler.php' );
