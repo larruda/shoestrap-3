@@ -3,23 +3,49 @@
 
 if ( !function_exists( 'shoestrap_phpsass_compiler' ) ) :
 /*
- * This function can be used to compile an scss file to css using the scssphp compiler
+ * This function can be used to compile a sass file to css using the sassphp compiler
  */
-function shoestrap_phpsass_compiler() {
+function shoestrap_phpsass_compiler( $sass = '', $syntax = 'scss', $style = '' ) {
 
-  $formatter = ( shoestrap_getVariable( 'minimize_css', true ) == 1 ) ?
-    'scss_formatter_compressed' :
-    'scss_formatter_nested';
+  // Get the style to be used.
+  if ( !$style ) :
+    $style = ( shoestrap_getVariable( 'minimize_css', true ) == 1 ) ? 'compressed' : 'nested';
+  endif;
 
-  $scss = new scssc();
-  $scss->setFormatter( $formatter );
+  // What do you want to compile?
+  $sass = ( !$sass ) ? shoestrap_complete_sass() : $sass;
 
-  $css = $scss->compile( shoestrap_complete() );
+  // Compiler options
+  $options = array(
+    'style'     => $style,
+    'cache'     => FALSE,
+    'syntax'    => $syntax,
+    'debug'     => FALSE,
+    'callbacks' => array(
+      'warn'    => 'shoestrap_compiler_warn',
+      'debug'   => 'shoestrap_compiler_debug',
+    ),
+  );
+
+  // Execute the compiler.
+  $parser = new SassParser( $options );
+  $css = $parser->toCss( $sass );
 
   return apply_filters( 'shoestrap_compiler_output', $css );
 }
 endif;
 
+
+function shoestrap_compiler_warn( $message, $context ) {
+  print "<p class='alert alert-danger'>WARN : ";
+  print_r($message);
+  print "</p>";
+}
+function shoestrap_compiler_debug( $message ) {
+  print "<p class='alert alert-warning'>DEBUG : ";
+  print_r($message);
+  print "</p>";
+}
 
 if ( !function_exists( 'shoestrap_compile_css' ) ) :
 function shoestrap_compile_css() {

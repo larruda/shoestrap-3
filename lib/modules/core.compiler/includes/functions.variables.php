@@ -1,6 +1,6 @@
 <?php
 
-if ( !function_exists( 'shoestrap_variables_less' ) ) :
+if ( !function_exists( 'shoestrap_variables_sass' ) ) :
 /*
  * The content below is a copy of bootstrap's variables.less file.
  *
@@ -10,7 +10,7 @@ if ( !function_exists( 'shoestrap_variables_less' ) ) :
  * and calculate the rest based on the user's selections.
  *
  */
-function shoestrap_variables_less() {
+function shoestrap_variables_sass() {
 
   $body_bg          = '#' . str_replace( '#', '', shoestrap_getVariable( 'color_body_bg', true ) );
   $brand_primary    = '#' . str_replace( '#', '', shoestrap_getVariable( 'color_brand_primary', true ) );
@@ -243,9 +243,9 @@ $fff: ' . $body_bg . ';
 
 
 // a flag to toggle asset pipeline / compass integration
-// defaults to true if twbs-font-path function is present (no function => twbs-font-path('') parsed as string == right side)
+// defaults to true if twbs-font-path function is present (no function => twbs-font-path(\'\') parsed as string == right side)
 // in Sass 3.3 this can be improved with: function-exists(twbs-font-path)
-$bootstrap-sass-asset-helper: (twbs-font-path('') != unquote("twbs-font-path('')")) !default;
+$bootstrap-sass-asset-helper: (twbs-font-path(\'\') != unquote("twbs-font-path(\'\')")) !default;
 //
 // Variables
 // --------------------------------------------------
@@ -980,34 +980,34 @@ $navbar-margin-top:       ' . shoestrap_getVariable( 'navbar_margin_top' ) . 'px
 endif;
 
 
-if ( !function_exists( 'shoestrap_complete_less' ) ) :
+if ( !function_exists( 'shoestrap_complete_sass' ) ) :
 /*
  * Brings all the LESS files that need to be compiled together.
  */
-function shoestrap_complete_less() {
-  $bootstrap    = get_template_directory() . '/assets/less/';
+function shoestrap_complete_sass() {
+  $bootstrap    = get_template_directory() . '/assets/sass/';
 
-  $bootstrap_less = '@import "' . $bootstrap . 'app.less";';
-  $bootstrap_less .= shoestrap_variables_less();
+  $bootstrap_less = '@import "' . $bootstrap . '/bootstrap/bootstrap.scss";';
+  // $bootstrap_less .= shoestrap_variables_sass();
 
-  if ( shoestrap_getVariable( 'gradients_toggle' ) == 1 ) :
-    $bootstrap_less .= '@import "' . $bootstrap . 'gradients.less";';
-  endif;
+  // if ( shoestrap_getVariable( 'gradients_toggle' ) == 1 ) :
+  //   $bootstrap_less .= '@import "' . $bootstrap . 'gradients.less";';
+  // endif;
 
-  // The custom LESS file path
-  $customlessfile = get_template_directory() . '/assets/less/custom.less';
+  // // The custom LESS file path
+  // $customlessfile = get_template_directory() . '/assets/less/custom.less';
 
   // If file is writable, process this.
-  if ( is_writable( $customlessfile ) ) :
-    // If the 'shoestrap_custom_lessfile_datetime' option does not exist, create it
-    if ( get_option( 'shoestrap_custom_lessfile_datetime' ) == '' ) :
-      add_option( 'shoestrap_custom_lessfile_datetime', filemtime( $customlessfile ) );
-    endif;
+  // if ( is_writable( $customlessfile ) ) :
+  //   // If the 'shoestrap_custom_lessfile_datetime' option does not exist, create it
+  //   if ( get_option( 'shoestrap_custom_lessfile_datetime' ) == '' ) :
+  //     add_option( 'shoestrap_custom_lessfile_datetime', filemtime( $customlessfile ) );
+  //   endif;
 
-    $bootstrap_less .= '@import "' . $bootstrap . 'custom.less";';
-  endif;
+    // $bootstrap_less .= '@import "' . $bootstrap . 'custom.less";';
+  // endif;
 
-  $bootstrap_less .= shoestrap_getVariable( 'user_less' );
+  // $bootstrap_less .= shoestrap_getVariable( 'user_less' );
 
   return apply_filters( 'shoestrap_compiler', $bootstrap_less );
 }
