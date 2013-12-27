@@ -2,7 +2,7 @@
 
 if ( !function_exists( 'shoestrap_variables_sass' ) ) :
 /*
- * The content below is a copy of bootstrap's variables.less file.
+ * The content below is a copy of bootstrap's _variables.sass file.
  *
  * Some options are user-configurable and stored as theme mods.
  * We try to minimize the options and simplify the user environment.
@@ -987,28 +987,29 @@ if ( !function_exists( 'shoestrap_complete_sass' ) ) :
 function shoestrap_complete_sass() {
   $bootstrap    = get_template_directory() . '/assets/sass/';
 
-  $bootstrap_less = '@import "' . $bootstrap . '/bootstrap/bootstrap.scss";';
-  // $bootstrap_less .= shoestrap_variables_sass();
+  $bootstrap_sass = '@import "compass";';
+  $bootstrap_sass .= '@import "' . $bootstrap . '/bootstrap/bootstrap.scss";';
+  // $bootstrap_sass .= shoestrap_variables_sass();
 
   // if ( shoestrap_getVariable( 'gradients_toggle' ) == 1 ) :
-  //   $bootstrap_less .= '@import "' . $bootstrap . 'gradients.less";';
+  //   $bootstrap_sass .= '@import "' . $bootstrap . 'gradients.sass";';
   // endif;
 
   // // The custom LESS file path
-  // $customlessfile = get_template_directory() . '/assets/less/custom.less';
+  // $customsassfile = get_template_directory() . '/assets/sass/custom.sass';
 
   // If file is writable, process this.
-  // if ( is_writable( $customlessfile ) ) :
-  //   // If the 'shoestrap_custom_lessfile_datetime' option does not exist, create it
-  //   if ( get_option( 'shoestrap_custom_lessfile_datetime' ) == '' ) :
-  //     add_option( 'shoestrap_custom_lessfile_datetime', filemtime( $customlessfile ) );
+  // if ( is_writable( $customsassfile ) ) :
+  //   // If the 'shoestrap_custom_sassfile_datetime' option does not exist, create it
+  //   if ( get_option( 'shoestrap_custom_sassfile_datetime' ) == '' ) :
+  //     add_option( 'shoestrap_custom_sassfile_datetime', filemtime( $customsassfile ) );
   //   endif;
 
-    // $bootstrap_less .= '@import "' . $bootstrap . 'custom.less";';
+    // $bootstrap_sass .= '@import "' . $bootstrap . 'custom.sass";';
   // endif;
 
-  // $bootstrap_less .= shoestrap_getVariable( 'user_less' );
+  // $bootstrap_sass .= shoestrap_getVariable( 'user_sass' );
 
-  return apply_filters( 'shoestrap_compiler', $bootstrap_less );
+  return apply_filters( 'shoestrap_compiler', $bootstrap_sass );
 }
 endif;
