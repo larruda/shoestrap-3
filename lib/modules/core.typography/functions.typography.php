@@ -37,6 +37,9 @@ function shoestrap_module_typography_googlefont_links() {
   $font_jumbotron       = shoestrap_getVariable( 'font_jumbotron' );
   $font_heading         = shoestrap_getVariable( 'font_heading' );
 
+  if ( !isset( $font_base['google'] ) || is_null( $font_base['google'] ) || empty( $font_base['google'] ) )
+    $font_base['google'] = false;
+
   if ( shoestrap_getVariable( 'font_heading_custom' ) ) {
     $font_h1 = shoestrap_getVariable( 'font_h1' );
     $font_h2 = shoestrap_getVariable( 'font_h2' );
