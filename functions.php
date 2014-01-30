@@ -25,3 +25,4 @@ require_once locate_template('/lib/custom.php');          // Custom functions
 
 
 do_action( 'shoestrap_include_files' );
+add_theme_support( 'automatic-feed-links' );
