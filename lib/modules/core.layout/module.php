@@ -58,7 +58,7 @@ function shoestrap_module_layout_options( $sections ) {
   $post_types = get_post_types( array( 'public' => true ), 'names' );
   foreach ( $post_types as $post_type ) :
     $fields[] = array(
-      'title'     => __( $post_type . ' Layout', 'shoestrap' ),
+      'title'     => $post_type . ' ' . __(  'Layout', 'shoestrap' ),
       'desc'      => __( 'Override your default stylings. Choose between 1, 2 or 3 column layout.', 'shoestrap' ),
       'id'        => $post_type . '_layout',
       'default'   => shoestrap_getVariable( 'layout' ),
