@@ -16,11 +16,11 @@ define('REDUX_OPT_NAME', 'shoestrap');
   // ** PLEASE PLEASE for production use your own key! **
 
   //Setup custom links in the footer for share icons
-   $args['share_icons'][] = array(
-    'url'  => 'https://github.com/shoestrap/shoestrap',
-    'title' => 'Fork Me on GitHub',
-    'icon'   => 'el-icon-github'
-   );
+   // $args['share_icons'][] = array(
+   //  'url'  => 'https://github.com/shoestrap/shoestrap',
+   //  'title' => 'Fork Me on GitHub',
+   //  'icon'   => 'el-icon-github'
+   // );
 
   // Choose a custom option name for your theme options, the default is the theme name in lowercase with spaces replaced by underscores
   $args['opt_name']               = REDUX_OPT_NAME;

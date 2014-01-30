@@ -12,17 +12,15 @@ function shoestrap_module_menus_options( $sections ) {
     'icon'  => 'el-icon-chevron-right icon-large'
   );
 
-  $url = admin_url( 'nav-menus.php' );
   $fields[] = array( 
     'id'          => 'help7',
     'title'       => __( 'Advanced NavBar Options', 'shoestrap' ),
     'desc'        => __( "You can activate or deactivate your Primary NavBar here, and define its properties.
                       Please note that you might have to manually create a menu if it doesn't already exist
-                      and add items to it from <a href='$url'>this page</a>.", 'shoestrap' ),
+                      and add items to it from Appearance -> Menus</a>.", 'shoestrap' ),
     'type'        => 'info'
   );
 
-  $url = admin_url( 'nav-menus.php?action=locations' );
   $fields[] = array( 
     'title'       => __( 'Type of NavBar', 'shoestrap' ),
     'desc'        => __( 'Choose the type of Navbar you want.

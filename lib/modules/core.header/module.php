@@ -12,7 +12,6 @@ function shoestrap_module_header_options( $sections ) {
     'icon'  => 'el-icon-chevron-right icon-large'
   );
 
-  $url = admin_url( 'widgets.php' );
   $fields[] = array( 
     'id'          => 'help9',
     'title'       => __( 'Extra Branding Area', 'shoestrap' ),
