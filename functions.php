@@ -1,5 +1,11 @@
 <?php
 
+if ( !defined( 'SHOESTRAP_LAYOUT' ) )
+	define( 'SHOESTRAP_LAYOUT', 1 );
+
+if ( !defined( 'SHOESTRAP_CSS_URL' ) )
+	define( 'SHOESTRAP_CSS_URL', get_template_directory_uri() . '/assets/css/main.min.css' );
+
 // require_once locate_template('/lib/dependencies/dependencies.php');           // Utility functions
 
 /**
