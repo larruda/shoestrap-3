@@ -1,6 +1,6 @@
 <?php
 
-require_once locate_template('/lib/dependencies/dependencies.php');           // Utility functions
+// require_once locate_template('/lib/dependencies/dependencies.php');           // Utility functions
 
 /**
  * Roots includes

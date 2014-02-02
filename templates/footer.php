@@ -1,5 +1,5 @@
 <footer class="content-info" role="contentinfo">
-  <?php if ( shoestrap_getVariable( 'site_style' ) != 'boxed'  ) : ?><div class="<?php echo shoestrap_container_class(); ?>"><?php endif; ?>
+  <?php if ( defined( 'SHOESTRAP_BOXED' ) ) : ?><div class="<?php echo SHOESTRAP_CONTAINER_CLASS; ?>"><?php endif; ?>
     <div class="row">
       <?php shoestrap_footer_content(); ?>
       <?php shoestrap_footer_html(); ?>
