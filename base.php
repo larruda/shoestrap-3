@@ -1,9 +1,3 @@
-<?php
-$site_style               = shoestrap_getVariable( 'site_style' );
-$navbar_toggle            = shoestrap_getVariable( 'navbar_toggle' );
-$layout_sidebar_on_front  = shoestrap_getVariable( 'layout_sidebar_on_front' );
-$left                     = ( shoestrap_getVariable( 'navbar_toggle' ) == 'left' ) ? true : false;
-?>
 <?php get_template_part('templates/head'); ?>
 <body <?php body_class(); ?>>
 
@@ -13,15 +7,15 @@ $left                     = ( shoestrap_getVariable( 'navbar_toggle' ) == 'left'
     </div>
   <![endif]-->
 
-  <?php if ( $site_style == 'boxed' ) : ?>
+  <?php if ( defined( 'SHOESTRAP_BOXED' ) ) : ?>
     <div class="container boxed-container">
   <?php endif; ?>
 
   <?php do_action( 'get_header' ); ?>
 
   <?php do_action( 'shoestrap_pre_navbar' ); ?>
-  <?php if ( $navbar_toggle != 'none' ) : ?>
-    <?php if ( $navbar_toggle != 'pills' ) : ?>
+  <?php if ( defined( 'SHOESTRAP_NAV_MODE' ) ) : ?>
+    <?php if ( SHOESTRAP_NAV_MODE != 'pills' ) : ?>
       <?php if ( !has_action( 'shoestrap_header_top_navbar_override' ) ) : ?>
         <?php get_template_part( 'templates/header-top-navbar' ); ?>
       <?php else : ?>
@@ -35,15 +29,15 @@ $left                     = ( shoestrap_getVariable( 'navbar_toggle' ) == 'left'
       <?php endif; ?>
     <?php endif; ?>
   <?php endif; ?>
-
+v
   <?php do_action( 'shoestrap_post_navbar' ); ?>
 
-  <?php if ( $site_style == 'boxed' ) : ?>
+  <?php if ( defined( 'SHOESTRAP_BOXED' ) ) : ?>
     </div>
   <?php endif; ?>
 
-  <?php if ( $left ) : ?>
-    <section class="static-menu-main <?php echo shoestrap_static_left_breakpoint(); ?> col-static-<?php echo ( 12 - shoestrap_getVariable( 'layout_secondary_width' ) ); ?>">
+  <?php if ( defined( 'SHOESTRAP_NAV_MODE' ) && SHOESTRAP_NAV_MODE == 'left') : ?>
+    <section class="static-menu-main <?php echo SHOESTRAP_STATIC_LEFT_BREAKPOINT; ?> col-static-<?php echo ( 12 - SHOESTRAP_LAYOUT_SECONDARY_WIDTH ); ?>">
   <?php endif; ?>
 
   <?php if ( has_action( 'shoestrap_below_top_navbar' ) ) : ?>
@@ -53,14 +47,10 @@ $left                     = ( shoestrap_getVariable( 'navbar_toggle' ) == 'left'
   <?php endif; ?>
 
   <?php do_action('shoestrap_pre_wrap'); ?>
-
-  <?php if ( has_action( 'shoestrap_breadcrumbs' ) ) : ?>
-    <?php do_action('shoestrap_breadcrumbs'); ?>
-  <?php endif; ?>
-
+  <?php do_action('shoestrap_breadcrumbs'); ?>
   <?php do_action('shoestrap_header_media'); ?>
 
-  <div class="wrap main-section <?php echo shoestrap_container_class(); ?>" role="document">
+  <div class="wrap main-section <?php echo SHOESTRAP_CONTAINER_CLASS; ?>" role="document">
 
     <?php do_action('shoestrap_pre_content'); ?>
 
@@ -69,20 +59,20 @@ $left                     = ( shoestrap_getVariable( 'navbar_toggle' ) == 'left'
 
         <?php do_action('shoestrap_pre_main'); ?>
 
-        <?php if ( shoestrap_section_class( 'wrap' ) ) : ?>
-          <div class="mp_wrap <?php echo shoestrap_section_class( 'wrapper' ); ?>">
+        <?php if ( defined( 'SHOESTRAP_SECTION_CLASS_WRAPPER' ) ) : ?>
+          <div class="mp_wrap <?php echo SHOESTRAP_SECTION_CLASS_WRAPPER ?>">
             <div class="row">
         <?php endif; ?>
 
-        <main class="main <?php echo shoestrap_section_class( 'main' ); ?>" <?php if (is_home()){ echo 'id="home-blog"';} ?> role="main">
+        <main class="main <?php echo SHOESTRAP_SECTION_CLASS_MAIN; ?>" <?php if (is_home()){ echo 'id="home-blog"';} ?> role="main">
           <?php include roots_template_path(); ?>
         </main><!-- /.main -->
 
         <?php do_action('shoestrap_after_main'); ?>
 
-        <?php if ( ( shoestrap_getLayout() != 0 && ( roots_display_sidebar() ) ) || ( is_front_page() && $layout_sidebar_on_front == 1 && shoestrap_getLayout() != 0 ) ) : ?>
-          <?php if ( !is_front_page() || ( is_front_page() && $layout_sidebar_on_front == 1 ) ) : ?>
-            <aside class="sidebar <?php echo shoestrap_section_class( 'primary' ); ?>" role="complementary">
+        <?php if ( ( SHOESTRAP_LAYOUT != 0 && ( roots_display_sidebar() ) ) || ( is_front_page() && defined( 'SHOESTRAP_SIDEBAR_ON_FRONT' ) && SHOESTRAP_LAYOUT != 0 ) ) : ?>
+          <?php if ( !is_front_page() || ( is_front_page() && defined( 'SHOESTRAP_SIDEBAR_ON_FRONT' ) ) ) : ?>
+            <aside class="sidebar <?php echo SHOESTRAP_SECTION_CLASS_PRIMARY; ?>" role="complementary">
               <?php if ( !has_action( 'shoestrap_sidebar_override' ) ) : ?>
                 <?php include roots_sidebar_path(); ?>
               <?php else : ?>
@@ -92,14 +82,14 @@ $left                     = ( shoestrap_getVariable( 'navbar_toggle' ) == 'left'
           <?php endif; ?>
         <?php endif; ?>
 
-        <?php if ( shoestrap_section_class( 'wrap' ) ) : ?>
+        <?php if ( defined( 'SHOESTRAP_SECTION_CLASS_WRAPPER' ) ) : ?>
             </div>
           </div>
         <?php endif; ?>
 
-        <?php if ( shoestrap_getLayout() >= 3 && is_active_sidebar( 'sidebar-secondary' ) ) : ?>
-          <?php if ( !is_front_page() || ( is_front_page() && $layout_sidebar_on_front == 1 ) ) : ?>
-            <aside class="sidebar secondary <?php echo shoestrap_section_class( 'secondary' ); ?>" role="complementary">
+        <?php if ( SHOESTRAP_LAYOUT >= 3 && is_active_sidebar( 'sidebar-secondary' ) ) : ?>
+          <?php if ( !is_front_page() || ( is_front_page() && defined( 'SHOESTRAP_SIDEBAR_ON_FRONT' ) ) ) : ?>
+            <aside class="sidebar secondary <?php echo SHOESTRAP_SECTION_CLASS_SECONDARY; ?>" role="complementary">
               <?php dynamic_sidebar( 'sidebar-secondary' ); ?>
             </aside><!-- /.sidebar -->
           <?php endif; ?>
@@ -110,7 +100,7 @@ $left                     = ( shoestrap_getVariable( 'navbar_toggle' ) == 'left'
   </div><!-- /.wrap -->
   <?php do_action('shoestrap_after_wrap'); ?>
 
-  <?php if ( $site_style == 'boxed' ) : ?>
+  <?php if ( defined( 'SHOESTRAP_BOXED' ) ) : ?>
     <div class="container boxed-container">
   <?php endif; ?>
 
@@ -123,11 +113,11 @@ $left                     = ( shoestrap_getVariable( 'navbar_toggle' ) == 'left'
 
   <?php do_action('shoestrap_after_footer'); ?>
 
-  <?php if ( $site_style == 'boxed' ) : ?>
+  <?php if ( defined( 'SHOESTRAP_BOXED' ) ) : ?>
     </div>
   <?php endif; ?>
 
-  <?php if ( $left ) : ?></section><?php endif; ?>
+  <?php if ( defined( 'SHOESTRAP_NAV_MODE' ) && SHOESTRAP_NAV_MODE == 'left') : ?></section><?php endif; ?>
 
   <?php wp_footer(); ?>
 
